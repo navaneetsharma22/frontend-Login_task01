@@ -9,7 +9,7 @@ export default function Navbar() {
   };
 
   return (
-    <div className="bg-blue-600 text-white px-6 py-3 flex justify-between items-center shadow-md">
+    <div className="bg-blue-650 text-white px-6 py-3 flex justify-between items-center shadow-md">
       <h1 className="text-lg font-semibold cursor-pointer"
         onClick={() => navigate("/dashboard")}>
         AuthApp
