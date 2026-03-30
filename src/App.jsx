@@ -6,6 +6,7 @@ import SetPassword from "./pages/SetPassword";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Navbar from "./components/Navbar"; 
+import { ToastProvider } from "./components/ToastProvider";
 
 
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -14,27 +15,29 @@ import "./App.css";
 
 function App() {
   return (
-    <BrowserRouter>
-    <Navbar />
+    <ToastProvider>
+      <BrowserRouter>
+        <Navbar />
 
-      <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<Register />} />
-        <Route path="/verify-otp" element={<VerifyOtp />} />
-        <Route path="/set-password" element={<SetPassword />} />
-        <Route path="/login" element={<Login />} />
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<Register />} />
+          <Route path="/verify-otp" element={<VerifyOtp />} />
+          <Route path="/set-password" element={<SetPassword />} />
+          <Route path="/login" element={<Login />} />
 
-        {/* Protected Route */}
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
+          {/* Protected Route */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </ToastProvider>
   );
 }
 
