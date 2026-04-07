@@ -1,3 +1,5 @@
+import StaticChatWidget from "../components/StaticChatWidget";
+
 const briefingItems = [
   {
     category: "Policy Watch",
@@ -201,6 +203,8 @@ export default function Dashboard() {
             </p>
           </article>
         </section>
+
+        <StaticChatWidget />
       </div>
     </div>
   );
