@@ -9,17 +9,24 @@ export default function Register() {
     email: "",
     phone: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const navigate = useNavigate();
   const toast = useToast();
 
   const handleSubmit = async () => {
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+
     try {
       await API.post("/register", form);
       toast.success("OTP sent", "Check your email or phone for the verification code.");
       navigate("/verify-otp", { state: form });
     } catch (err) {
       toast.error("Could not send OTP", err.response?.data?.message || "Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -89,9 +96,10 @@ export default function Register() {
 
             <button
               onClick={handleSubmit}
-              className="mt-6 w-full rounded-2xl bg-slate-900 py-3 text-sm font-bold uppercase tracking-[0.25em] text-white transition hover:bg-slate-700"
+              disabled={isSubmitting}
+              className="mt-6 w-full rounded-2xl bg-slate-900 py-3 text-sm font-bold uppercase tracking-[0.25em] text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              Send OTP
+              {isSubmitting ? "Sending..." : "Send OTP"}
             </button>
 
             <p className="mt-5 text-sm text-slate-600">
