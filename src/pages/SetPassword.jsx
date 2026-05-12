@@ -10,7 +10,7 @@ export default function SetPassword() {
   const toast = useToast();
 
   const handleSet = async () => {
-    if (!state?.email) {
+    if (!state?.email && !state?.phone) {
       toast.error("Missing setup details", "Please verify your OTP again before setting a password.");
       navigate("/");
       return;
@@ -24,10 +24,12 @@ export default function SetPassword() {
     try {
       await API.post("/set-password", {
         email: state.email,
+        phone: state.phone,
         password,
       });
       toast.success("Password set", "Your account is ready. You can log in now.");
       navigate("/login");
+
     } catch (err) {
       toast.error("Could not save password", err.response?.data?.message || "Please try again.");
     }
