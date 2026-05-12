@@ -35,6 +35,8 @@ const picks = [
 ];
 
 export default function Dashboard() {
+  const userName = localStorage.getItem("userName") || "Member";
+
   return (
     <div className="px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl space-y-6">
@@ -47,8 +49,9 @@ export default function Dashboard() {
                 Private Briefing Room
               </p>
               <h2 className="mt-4 max-w-3xl text-4xl font-black leading-tight text-white sm:text-5xl">
-                Your secured news desk is live.
+                Welcome back, {userName}.
               </h2>
+
               <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
                 Verified access unlocks a quieter, sharper newsroom experience built
                 for members who want signal over noise, with curated coverage,

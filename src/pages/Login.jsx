@@ -4,25 +4,28 @@ import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "../components/ToastProvider";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
+  const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
   const toast = useToast();
 
   const handleLogin = async () => {
-    if (!email || !password) {
-      toast.info("Missing fields", "Enter your email and password to continue.");
+    if (!identifier || !password) {
+      toast.info("Missing fields", "Enter your email or phone and password to continue.");
       return;
     }
 
+    const isEmail = identifier.includes("@");
+
     try {
       const res = await API.post("/login-password", {
-        email,
+        [isEmail ? "email" : "phone"]: identifier,
         password,
       });
 
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("userName", res.data.user.name || "Member");
 
       toast.success("Login successful", "Welcome back to your dashboard.");
       navigate("/dashboard");
@@ -41,20 +44,22 @@ export default function Login() {
             </p>
             <h2 className="mt-3 text-3xl font-black text-slate-900">Sign in to your account</h2>
             <p className="mt-3 text-sm leading-6 text-slate-600">
-              Enter the email and password you created after OTP verification.
+              Enter the email or phone number and password you created after OTP verification.
             </p>
 
             <div className="mt-8 space-y-4">
               <input
                 className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-teal-500 focus:bg-white"
-                placeholder="Email address"
-                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email or Phone number"
+                value={identifier}
+                onChange={(e) => setIdentifier(e.target.value)}
               />
 
               <input
                 type="password"
                 className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-teal-500 focus:bg-white"
                 placeholder="Password"
+                value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
